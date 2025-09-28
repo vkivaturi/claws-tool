@@ -44,6 +44,7 @@ const App = () => {
   ]);
   const [actionSelectedIndex, setActionSelectedIndex] = useState(0);
   const [testInput, setTestInput] = useState('{"key": "value"}');
+  const [cursorPosition, setCursorPosition] = useState(0);
   const [isEditingInput, setIsEditingInput] = useState(false);
 
   const fetchLambdaFunctions = async () => {
@@ -293,16 +294,23 @@ const App = () => {
           }
         } else if (key.escape) {
           setIsEditingInput(false);
-        } else if (input && input.length === 1) {
-          if (key.backspace || key.delete) {
-            setTestInput(prev => prev.slice(0, -1));
-          } else {
-            setTestInput(prev => prev + input);
+        } else if (key.leftArrow) {
+          setCursorPosition(prev => Math.max(0, prev - 1));
+        } else if (key.rightArrow) {
+          setCursorPosition(prev => Math.min(testInput.length, prev + 1));
+        } else if (key.backspace || key.delete) {
+          if (cursorPosition > 0) {
+            setTestInput(prev => prev.slice(0, cursorPosition - 1) + prev.slice(cursorPosition));
+            setCursorPosition(prev => prev - 1);
           }
+        } else if (input && input.length === 1 && !key.ctrl && !key.meta) {
+          setTestInput(prev => prev.slice(0, cursorPosition) + input + prev.slice(cursorPosition));
+          setCursorPosition(prev => prev + 1);
         }
       } else {
         if (key.return) {
           setIsEditingInput(true);
+          setCursorPosition(testInput.length);
         } else if (key.escape) {
           setViewMode('lambda-actions');
           setResults(prev => [...prev, 'Back to Lambda actions']);
@@ -413,8 +421,9 @@ const App = () => {
             <Text color="cyan">JSON Input:</Text>
             <Box borderStyle="single" borderColor={isEditingInput ? 'yellow' : 'gray'} padding={1}>
               <Text color={isEditingInput ? 'yellow' : 'white'}>
-                {testInput}
-                {isEditingInput && <Text color="yellow">|</Text>}
+                {isEditingInput ? (
+                  testInput.slice(0, cursorPosition) + '|' + testInput.slice(cursorPosition)
+                ) : testInput}
               </Text>
             </Box>
             <Box marginTop={1}>
