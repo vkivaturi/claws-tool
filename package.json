@@ -1,0 +1,37 @@
+{
+  "name": "claws-tool",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A CLI tool built with React and Ink-UI, similar to Claude Code interface",
+  "main": "dist/cli.js",
+  "bin": {
+    "claws": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/cli.js",
+    "dev": "ts-node src/cli.tsx",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "react",
+    "ink",
+    "tool"
+  ],
+  "author": "Vijay Ivaturi (@vkivaturi)",
+  "license": "ISC",
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "@types/react": "^19.1.15",
+    "ink": "^6.3.1",
+    "react": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
