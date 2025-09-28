@@ -312,22 +312,22 @@ const App = () => {
   });
 
   return (
-    <Box flexDirection="column" height={25}>
-      {/* Results Panel - 15 lines height (60% of 25) */}
-      <Box flexDirection="column" borderStyle="single" borderColor="blue" padding={1} height={15}>
+    <Box flexDirection="column">
+      {/* Results Panel - Terminal-native scrolling */}
+      <Box flexDirection="column" borderStyle="single" borderColor="blue" padding={1}>
         <Text color="cyan" bold>Results Panel (Ctrl+C to exit)</Text>
         <Text>─────────────</Text>
         <Box flexDirection="column">
-          {results.slice(Math.max(0, results.length - 10)).map((result, index) => (
-            <Text key={index + Math.max(0, results.length - 10)} color={index === 0 && results.length === 1 ? 'green' : 'white'}>
+          {results.map((result, index) => (
+            <Text key={index} color={index === 0 && results.length === 1 ? 'green' : 'white'}>
               {result}
             </Text>
           ))}
         </Box>
       </Box>
 
-      {/* Command Options Box - 8 lines height (30% of 25) */}
-      <Box flexDirection="column" borderStyle="single" borderColor="green" padding={1} height={8}>
+      {/* Command Options Box - Terminal-native layout */}
+      <Box flexDirection="column" borderStyle="single" borderColor="green" padding={1}>
         {viewMode === 'options' ? (
           <>
             <Text color="yellow" bold>Available Commands</Text>
