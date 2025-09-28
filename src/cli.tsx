@@ -312,20 +312,22 @@ const App = () => {
   });
 
   return (
-    <Box flexDirection="column" height={20}>
-      {/* Results Panel */}
-      <Box flexDirection="column" borderStyle="single" borderColor="blue" padding={1} height={12}>
-        <Text color="cyan" bold>Results Panel</Text>
+    <Box flexDirection="column" height={25}>
+      {/* Results Panel - 15 lines height (60% of 25) */}
+      <Box flexDirection="column" borderStyle="single" borderColor="blue" padding={1} height={15}>
+        <Text color="cyan" bold>Results Panel (Ctrl+C to exit)</Text>
         <Text>─────────────</Text>
-        {results.map((result, index) => (
-          <Text key={index} color={index === 0 ? 'green' : 'white'}>
-            {result}
-          </Text>
-        ))}
+        <Box flexDirection="column">
+          {results.slice(Math.max(0, results.length - 10)).map((result, index) => (
+            <Text key={index + Math.max(0, results.length - 10)} color={index === 0 && results.length === 1 ? 'green' : 'white'}>
+              {result}
+            </Text>
+          ))}
+        </Box>
       </Box>
 
-      {/* Command Options Box */}
-      <Box flexDirection="column" borderStyle="single" borderColor="green" padding={1} marginTop={1}>
+      {/* Command Options Box - 8 lines height (30% of 25) */}
+      <Box flexDirection="column" borderStyle="single" borderColor="green" padding={1} height={8}>
         {viewMode === 'options' ? (
           <>
             <Text color="yellow" bold>Available Commands</Text>
